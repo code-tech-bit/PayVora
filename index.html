@@ -1,0 +1,2775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAYVORA - Earn, Task & Advertise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #4f46e5;
+            --blue-dim: #4338ca;
+            --blue-light: #eef2ff;
+            --blue-glow: rgba(79, 70, 229, 0.14);
+            --accent: #f59e0b;
+            --accent-light: #fffbeb;
+            --black: #ffffff;
+            --dark-gray: #f8fafc;
+            --medium-gray: #ffffff;
+            --light-gray: #eef2f7;
+            --text-white: #0f172a;
+            --text-gray: #64748b;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --border-soft: #e5e9f0;
+            --surface-translucent: rgba(255, 255, 255, 0.9);
+        }
+
+        html.dark-theme {
+            --blue-light: rgba(79, 70, 229, 0.18);
+            --blue-glow: rgba(79, 70, 229, 0.3);
+            --accent-light: rgba(245, 158, 11, 0.14);
+            --black: #0b1220;
+            --dark-gray: #0d1526;
+            --medium-gray: #111c30;
+            --light-gray: #1b2740;
+            --text-white: #f1f5f9;
+            --text-gray: #94a3b8;
+            --border-soft: #223049;
+            --surface-translucent: rgba(11, 18, 32, 0.88);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.25; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--text-white);
+            overflow-x: hidden;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        .orbitron {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .bg-grid { display: none; }
+
+        .neon-text { color: var(--blue); }
+
+        .neon-border {
+            border: 1px solid var(--border-soft);
+            background: var(--medium-gray);
+        }
+
+        .neon-btn {
+            background: linear-gradient(135deg, var(--blue), var(--blue-dim));
+            color: #ffffff;
+            border: none;
+            padding: 14px 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s;
+            border-radius: 999px;
+            box-shadow: 0 4px 14px var(--blue-glow);
+        }
+
+        .neon-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px var(--blue-glow);
+        }
+
+        .neon-btn-outline {
+            background: var(--medium-gray);
+            color: var(--blue);
+            border: 1.5px solid var(--border-soft);
+            padding: 14px 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 999px;
+        }
+
+        .neon-btn-outline:hover {
+            border-color: var(--blue);
+            background: var(--blue-light);
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1px solid var(--border-soft);
+            background: var(--medium-gray);
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .icon-btn:hover { border-color: var(--blue); color: var(--blue); }
+        .icon-btn svg { width: 20px; height: 20px; }
+
+        .icon-dot {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--danger);
+            border: 2px solid var(--medium-gray);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 50px;
+            background: var(--surface-translucent);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--text-white);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 11px 11px 11px 3px;
+            background: linear-gradient(135deg, var(--blue), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transform: rotate(-6deg);
+            box-shadow: 0 4px 10px var(--blue-glow);
+        }
+
+        .logo-mark svg { width: 18px; height: 18px; color: #fff; transform: rotate(6deg); }
+
+        .logo span { color: var(--blue); }
+        .logo .logo-mark, .logo .logo-mark span { color: #ffffff; }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--blue); }
+
+        /* Sections */
+        .section { display: none; min-height: 100vh; padding-top: 80px; }
+        .section.active { display: block; }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            background:
+                radial-gradient(circle at 20% 15%, var(--blue-light) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, var(--accent-light) 0%, transparent 35%),
+                linear-gradient(180deg, var(--blue-light) 0%, var(--black) 60%);
+        }
+
+        .hero-content h1 {
+            font-size: 60px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.15;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-content p {
+            font-size: 19px;
+            color: var(--text-gray);
+            margin-bottom: 36px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .hero-note { margin-top: 22px; color: var(--text-gray); font-size: 14px; }
+        .hero-stats { display: none; }
+
+        /* How It Works */
+        .how-it-works { padding: 90px 50px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 36px; margin-bottom: 50px; letter-spacing: -0.5px; font-weight: 800; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+
+        .step-card {
+            background: var(--medium-gray);
+            border: 1px solid var(--border-soft);
+            padding: 36px 30px;
+            text-align: left;
+            transition: all 0.2s;
+            border-radius: 18px;
+        }
+
+        .step-card:hover { border-color: var(--blue); box-shadow: 0 10px 30px var(--blue-glow); transform: translateY(-4px); }
+
+        .step-number {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--blue);
+            background: var(--blue-light);
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .step-card h3 { font-size: 21px; margin-bottom: 12px; color: var(--text-white); }
+        .step-card p { color: var(--text-gray); line-height: 1.6; font-size: 15px; }
+
+        /* Why fee section */
+        .why-fee { padding: 0 50px 90px; max-width: 1000px; margin: 0 auto; }
+        .why-fee-box {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-soft);
+            border-radius: 18px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .why-fee-box h3 { font-size: 22px; margin-bottom: 10px; color: var(--text-white); }
+        .why-fee-box p { color: var(--text-gray); line-height: 1.7; font-size: 15px; }
+
+        /* Plans Section */
+        .plans-section { padding: 90px 50px; background: var(--dark-gray); }
+        .plans-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 800px; margin: 0 auto; }
+
+        .plan-card {
+            background: var(--medium-gray);
+            border: 1.5px solid var(--border-soft);
+            padding: 44px 36px;
+            text-align: center;
+            transition: all 0.2s;
+            border-radius: 20px;
+        }
+
+        .plan-card.featured { border-color: var(--blue); box-shadow: 0 12px 32px var(--blue-glow); }
+        .plan-card h3 { font-size: 26px; margin-bottom: 16px; }
+        .plan-price { font-size: 48px; font-weight: 800; color: var(--blue); margin-bottom: 26px; }
+        .plan-price span { font-size: 16px; color: var(--text-gray); font-weight: 500; }
+        .plan-features { list-style: none; margin-bottom: 30px; text-align: left; }
+        .plan-features li { padding: 10px 0; color: var(--text-gray); border-bottom: 1px solid var(--border-soft); font-size: 14px; }
+
+        /* Forms */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background:
+                radial-gradient(circle at 15% 20%, var(--blue-light) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, var(--accent-light) 0%, transparent 40%),
+                var(--dark-gray);
+        }
+
+        .auth-box {
+            background: var(--medium-gray);
+            border: 1px solid var(--border-soft);
+            border-top: 4px solid var(--blue);
+            padding: 46px;
+            width: 100%;
+            max-width: 460px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+        }
+
+        .auth-box h2 { text-align: center; font-size: 28px; margin-bottom: 30px; letter-spacing: -0.3px; font-weight: 700; }
+        .form-group { margin-bottom: 22px; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--text-gray); font-size: 13px; letter-spacing: 0.2px; font-weight: 600; }
+
+        .form-control {
+            width: 100%;
+            padding: 13px 15px;
+            background: var(--dark-gray);
+            border: 1.5px solid var(--border-soft);
+            color: var(--text-white);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.2s;
+            outline: none;
+            border-radius: 10px;
+        }
+
+        .form-control:focus { border-color: var(--blue); box-shadow: 0 0 0 4px var(--blue-glow); }
+        .form-text { text-align: center; margin-top: 20px; color: var(--text-gray); font-size: 14px; }
+        .form-text a { color: var(--blue); text-decoration: none; font-weight: 600; }
+
+        /* Dashboard */
+        .dashboard { padding: 100px 20px 110px; max-width: 900px; margin: 0 auto; }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 26px;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-header h2 { font-size: 26px; letter-spacing: -0.3px; font-weight: 800; }
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+
+        .user-badge { display: flex; align-items: center; gap: 12px; }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        /* Balance card */
+        .balance-card {
+            background: linear-gradient(135deg, var(--blue) 0%, #4338ca 100%);
+            border-radius: 22px;
+            padding: 28px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .balance-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .balance-card-top span { font-size: 14px; opacity: 0.85; }
+        .balance-card .icon-btn { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); color: #fff; }
+        .balance-card .icon-btn:hover { border-color: #fff; color: #fff; }
+        .balance-amount { font-size: 38px; font-weight: 800; font-family: 'Poppins', sans-serif; margin-bottom: 22px; }
+
+        .wallet-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .wallet-chip { background: rgba(255,255,255,0.14); border-radius: 12px; padding: 12px; }
+        .wallet-chip p { font-size: 11px; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+        .wallet-chip strong { font-size: 15px; font-family: 'Poppins', sans-serif; }
+
+        .earn-summary {
+            background: var(--medium-gray);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .earn-summary p { font-size: 12px; color: var(--text-gray); margin-bottom: 4px; }
+        .earn-summary strong { font-size: 17px; font-family: 'Poppins', sans-serif; }
+
+        .qa-title { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-gray); margin-bottom: 14px; }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 34px;
+        }
+
+        .qa-card {
+            background: var(--medium-gray);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 18px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .qa-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 20px var(--blue-glow); }
+
+        .qa-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--blue-light);
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+
+        .qa-icon svg { width: 20px; height: 20px; }
+        .qa-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+        .qa-card p { font-size: 11px; color: var(--text-gray); }
+
+        .stats-row { display: none; }
+
+        .panel {
+            background: var(--medium-gray);
+            border: 1px solid var(--border-soft);
+            padding: 24px;
+            border-radius: 18px;
+            margin-bottom: 22px;
+            scroll-margin-top: 90px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .panel-header h3 { font-size: 17px; letter-spacing: -0.2px; font-weight: 700; }
+
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { text-align: left; padding: 14px; color: var(--text-gray); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 2px solid var(--border-soft); font-weight: 700; }
+        .data-table td { padding: 14px; border-bottom: 1px solid var(--border-soft); color: var(--text-white); font-size: 14px; }
+        .data-table tr:hover td { background: var(--blue-light); }
+
+        .badge { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .badge-success { background: rgba(22, 163, 74, 0.12); color: var(--success); border: 1px solid rgba(22, 163, 74, 0.3); }
+        .badge-pending { background: rgba(217, 119, 6, 0.12); color: var(--warning); border: 1px solid rgba(217, 119, 6, 0.3); }
+        .badge-danger { background: rgba(220, 38, 38, 0.12); color: var(--danger); border: 1px solid rgba(220, 38, 38, 0.3); }
+
+        /* Task Cards */
+        .task-list { display: flex; flex-direction: column; gap: 14px; }
+
+        .task-item {
+            background: var(--dark-gray);
+            border: 1px solid var(--border-soft);
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            border-radius: 14px;
+            flex-wrap: wrap;
+        }
+
+        .task-item:hover { border-color: var(--blue); box-shadow: 0 6px 18px var(--blue-glow); }
+        .task-info h4 { font-size: 17px; margin-bottom: 5px; }
+        .task-info p { font-size: 14px; color: var(--text-gray); }
+        .task-reward { font-size: 22px; font-weight: 800; color: var(--success); }
+
+        .submission-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--dark-gray);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .notif-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: var(--dark-gray);
+            margin-bottom: 8px;
+            font-size: 14px;
+            border-left: 3px solid var(--border-soft);
+        }
+        .notif-item.approved { border-left-color: var(--success); }
+        .notif-item.rejected { border-left-color: var(--danger); }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--medium-gray);
+            border: 1px solid var(--border-soft);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+            border-radius: 20px;
+        }
+
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; color: var(--text-gray); cursor: pointer; background: none; border: none; }
+
+        /* Admin Sidebar */
+        .admin-layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+        .admin-sidebar {
+            background: var(--medium-gray);
+            border-right: 1px solid var(--border-soft);
+            padding: 30px 18px;
+            position: fixed;
+            width: 260px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .admin-sidebar .logo { font-size: 22px; margin-bottom: 40px; text-align: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-soft); justify-content: center; }
+
+        .admin-nav { list-style: none; }
+        .admin-nav li { margin-bottom: 4px; }
+
+        .admin-nav a {
+            display: block;
+            padding: 13px 18px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.2px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            border-radius: 10px;
+        }
+
+        .admin-nav a:hover, .admin-nav a.active { background: var(--blue-light); color: var(--blue); border-left-color: var(--blue); }
+        .admin-main { margin-left: 260px; padding: 100px 40px 40px; }
+        .admin-stats { display: grid; grid-template-columns: repeat(4, minmax(160px, 1fr)); gap: 20px; margin-bottom: 40px; }
+
+        .stat-card {
+            background: var(--medium-gray);
+            border: 1px solid var(--border-soft);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--blue); }
+        .stat-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); margin-bottom: 10px; font-weight: 600; }
+        .stat-card .value { font-size: 28px; font-weight: 800; color: var(--text-white); }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--border-soft); flex-wrap: wrap; }
+
+        .tab-btn {
+            padding: 12px 22px;
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Referral Section */
+        .referral-box { background: var(--blue-light); border: 1px solid rgba(79, 70, 229, 0.28); padding: 28px; text-align: center; margin-bottom: 26px; border-radius: 16px; }
+
+        .referral-link {
+            background: var(--medium-gray);
+            padding: 14px;
+            font-family: 'Poppins', monospace;
+            font-size: 15px;
+            color: var(--blue);
+            margin: 18px 0;
+            border: 1px solid rgba(79, 70, 229, 0.28);
+            word-break: break-all;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Bottom nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--surface-translucent);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-soft);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 6px 8px;
+            z-index: 900;
+        }
+
+        .bottom-nav button {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: color 0.2s;
+        }
+
+        .bottom-nav button svg { width: 20px; height: 20px; }
+        .bottom-nav button:hover, .bottom-nav button.active { color: var(--blue); }
+
+        /* Floating action buttons */
+        .fab {
+            position: fixed;
+            right: 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.22);
+            z-index: 950;
+            transition: transform 0.2s;
+        }
+
+        .fab:hover { transform: translateY(-2px); }
+        .fab svg { width: 20px; height: 20px; }
+
+        .fab-support {
+            bottom: 150px;
+            width: 50px;
+            height: 50px;
+            justify-content: center;
+            background: var(--medium-gray);
+            color: var(--blue);
+            border: 1px solid var(--border-soft);
+        }
+
+        .fab-ads {
+            bottom: 90px;
+            padding: 13px 20px;
+            background: var(--blue);
+            color: #fff;
+        }
+
+        /* Wallet Actions */
+        .wallet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+
+        .wallet-btn {
+            padding: 14px;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-soft);
+            color: var(--text-white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 12px;
+        }
+
+        .wallet-btn:hover { background: var(--blue); color: #ffffff; }
+
+        /* Toast Notifications */
+        .toast-container { position: fixed; top: 100px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 10px; }
+
+        .toast {
+            padding: 18px 26px;
+            background: var(--medium-gray);
+            border-left: 4px solid var(--blue);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+            animation: slideIn 0.3s ease;
+            min-width: 300px;
+            font-weight: 600;
+            border-radius: 10px;
+            color: var(--text-white);
+        }
+
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.warning { border-left-color: var(--warning); }
+
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 12px 32px var(--blue-glow); } 50% { box-shadow: 0 12px 44px rgba(79, 70, 229, 0.24); } }
+        .pulse { animation: pulse 2.5s infinite; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .steps-grid { grid-template-columns: 1fr; }
+            .plans-grid { grid-template-columns: 1fr; }
+            .admin-layout { grid-template-columns: 1fr; }
+            .admin-sidebar { display: none; }
+            .admin-main { margin-left: 0; }
+            .admin-stats { grid-template-columns: repeat(2, 1fr); }
+            .why-fee-box { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .nav-links a:not(.icon-btn) { display: none; }
+            .hero-content h1 { font-size: 36px; }
+            .admin-stats { grid-template-columns: 1fr; }
+            .wallet-actions { grid-template-columns: 1fr; }
+            .quick-actions-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+            .qa-card { padding: 12px 6px; }
+            .qa-card p { display: none; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-gray); }
+        ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-gray); }
+        .hidden { display: none !important; }
+
+        .activation-banner {
+            background: rgba(217, 119, 6, 0.08);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 14px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .activation-banner p { color: var(--warning); font-weight: 600; }
+
+        .file-upload {
+            border: 2px dashed var(--border-soft);
+            padding: 36px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 14px;
+        }
+
+        .file-upload:hover { border-color: var(--blue); background: var(--blue-light); }
+        .preview-img { max-width: 100%; max-height: 200px; margin-top: 15px; border: 1px solid var(--border-soft); border-radius: 10px; }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--dark-gray);
+            border-left: 3px solid var(--blue);
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .transaction-item.debit { border-left-color: var(--danger); }
+        .transaction-item.credit { border-left-color: var(--success); }
+        .transaction-info h4 { font-size: 15px; margin-bottom: 3px; }
+        .transaction-info p { font-size: 13px; color: var(--text-gray); }
+        .transaction-amount { font-size: 18px; font-weight: 800; }
+        .transaction-amount.credit { color: var(--success); }
+        .transaction-amount.debit { color: var(--danger); }
+
+        .profile-row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border-soft); font-size: 14px; }
+        .profile-row span:first-child { color: var(--text-gray); }
+        .profile-row span:last-child { font-weight: 600; }
+
+        .share-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+
+        .share-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            color: #fff;
+            transition: transform 0.15s;
+        }
+
+        .share-btn:hover { transform: translateY(-1px); }
+        .share-whatsapp { background: #25d366; }
+        .share-telegram { background: #2ea6ee; }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: var(--dark-gray);
+            border: 1px solid var(--border-soft);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue), var(--accent));
+            border-radius: 999px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-gray); margin-bottom: 8px; }
+
+        .badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+
+        .badge-chip {
+            text-align: center;
+            padding: 14px 8px;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            background: var(--dark-gray);
+            opacity: 0.4;
+            filter: grayscale(1);
+        }
+
+        .badge-chip.earned { opacity: 1; filter: none; background: var(--blue-light); border-color: var(--blue); }
+        .badge-chip .badge-emoji { font-size: 22px; margin-bottom: 6px; }
+        .badge-chip .badge-name { font-size: 11px; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="logo orbitron"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-13h-8l1-7z"/></svg></span>Pay<span>vora</span></div>
+        <div class="nav-links" id="navLinks">
+            <a href="#" onclick="showSection('home')">Home</a>
+            <a href="#" onclick="showSection('howItWorks')">How It Works</a>
+            <a href="#" onclick="showSection('plans')">Plans</a>
+            <a href="#" onclick="showSection('login')" id="navLogin">Login</a>
+            <a href="#" onclick="showSection('register')" id="navRegister" class="neon-btn" style="padding: 10px 22px; font-size: 13px;">Get Started</a>
+            <a href="#" onclick="logout()" id="navLogout" class="hidden">Logout</a>
+            <a href="#" onclick="goToDashboard()" id="navDashboard" class="hidden neon-btn" style="padding: 10px 22px; font-size: 13px;">Dashboard</a>
+            <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle theme"></button>
+        </div>
+    </nav>
+
+    <!-- HOME SECTION -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="orbitron">Your time is worth something. Get paid for it.</h1>
+                <p>Finish quick tasks, bring in people you know, or run your own ad campaign — every naira lands in one wallet you can actually withdraw.</p>
+                <div class="hero-actions">
+                    <button class="neon-btn" onclick="showSection('register')">Join Payvora</button>
+                    <button class="neon-btn-outline" onclick="showSection('login')">I have an account</button>
+                </div>
+                <p class="hero-note">Signup is free — a one-time activation unlocks tasks, referrals and withdrawals.</p>
+            </div>
+        </div>
+
+        <div class="how-it-works">
+            <h2 class="section-title orbitron">Three steps to your first payout</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number orbitron">1</div>
+                    <h3 class="orbitron">Create your profile</h3>
+                    <p>Just your name, email and phone number — no paperwork, no waiting around for approval.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number orbitron">2</div>
+                    <h3 class="orbitron">Unlock your wallet</h3>
+                    <p>A one-time bank transfer of ₦500 or ₦1000 activates tasks, referrals and withdrawals for good.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number orbitron">3</div>
+                    <h3 class="orbitron">Do the work, get paid</h3>
+                    <p>Finish a task, upload proof, and cash out once it's approved. Invite friends and earn a cut of their activation too.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="why-fee">
+            <div class="why-fee-box">
+                <div>
+                    <h3 class="orbitron">Why we charge to activate</h3>
+                    <p>It keeps the task pool free of bots and throwaway accounts, so the reward pot stays real and payouts stay fast for everyone else.</p>
+                </div>
+                <div>
+                    <h3 class="orbitron">What activating unlocks</h3>
+                    <p>Every paid task, referral bonuses on your friends' activation, faster withdrawals, and the ability to run your own ad campaign on Payvora.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="howItWorks" class="section">
+        <div class="how-it-works">
+            <h2 class="section-title orbitron">How It <span class="neon-text">Works</span></h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number orbitron">1</div>
+                    <h3 class="orbitron">Sign Up</h3>
+                    <p>Register with your email and phone number. No KYC required. Get instant access to your dashboard.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number orbitron">2</div>
+                    <h3 class="orbitron">Activate</h3>
+                    <p>Pay a small one-time activation fee via secure bank transfer. Choose between ₦500 or ₦1000 plan.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number orbitron">3</div>
+                    <h3 class="orbitron">Earn</h3>
+                    <p>Complete tasks and upload proof for admin review, refer friends, and place ads. Withdraw earnings to your Nigerian bank account once approved.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANS SECTION -->
+    <section id="plans" class="section">
+        <div class="plans-section">
+            <h2 class="section-title orbitron">Activation <span class="neon-text">Plans</span></h2>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h3 class="orbitron">BASIC</h3>
+                    <div class="plan-price">₦500<span>/one-time</span></div>
+                    <ul class="plan-features">
+                        <li>Access to Basic Tasks</li>
+                        <li>₦50 - ₦100 per task</li>
+                        <li>Referral Bonus: ₦300</li>
+                        <li>Standard Withdrawal</li>
+                        <li>Email Support</li>
+                    </ul>
+                    <button class="neon-btn-outline" onclick="selectPlan(500)" style="width: 100%;">Choose Basic</button>
+                </div>
+                <div class="plan-card featured pulse">
+                    <h3 class="orbitron">PREMIUM</h3>
+                    <div class="plan-price">₦1000<span>/one-time</span></div>
+                    <ul class="plan-features">
+                        <li>Access to All Tasks</li>
+                        <li>₦100 - ₦500 per task</li>
+                        <li>Referral Bonus: ₦600</li>
+                        <li>Priority Withdrawal</li>
+                        <li>Ad Placement Access</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <button class="neon-btn" onclick="selectPlan(1000)" style="width: 100%;">Choose Premium</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOGIN -->
+    <section id="login" class="section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="orbitron">Login</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="loginEmail" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="loginPassword" required placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Login</button>
+                    <p class="form-text">Don't have an account? <a href="#" onclick="showSection('register')">Register</a></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register" class="section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="orbitron">Register</h2>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" id="regName" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="regEmail" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-control" id="regPhone" required placeholder="e.g. 08012345678">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="regPassword" required placeholder="Create a password" minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Referral Code (Optional)</label>
+                        <input type="text" class="form-control" id="regRef" placeholder="Enter referral code if you have one">
+                    </div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Create Account</button>
+                    <p class="form-text">Already have an account? <a href="#" onclick="showSection('login')">Login</a></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTIVATION -->
+    <section id="activation" class="section">
+        <div class="auth-container">
+            <div class="auth-box" style="max-width: 600px;">
+                <h2 class="orbitron">Activate Account</h2>
+                <p style="text-align: center; color: var(--text-gray); margin-bottom: 30px;">Complete your activation to start earning</p>
+
+                <div style="background: var(--dark-gray); padding: 20px; margin-bottom: 30px; border: 1px solid var(--border-soft); border-radius: 14px;">
+                    <h4 style="color: var(--blue); margin-bottom: 15px; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px;">Bank Transfer Details</h4>
+                    <p style="margin-bottom: 10px;"><strong>Bank Name:</strong> <span style="color: var(--text-white);">First Bank of Nigeria</span></p>
+                    <p style="margin-bottom: 10px;"><strong>Account Name:</strong> <span style="color: var(--text-white);">PAYVORA LTD</span></p>
+                    <p style="margin-bottom: 10px;"><strong>Account Number:</strong> <span style="color: var(--blue); font-family: 'Poppins', monospace; font-size: 18px; font-weight: 700;">0123456789</span></p>
+                    <p><strong>Amount:</strong> <span style="color: var(--success); font-size: 20px; font-weight: 700;">₦<span id="activationAmount">500</span></span></p>
+                </div>
+
+                <form onsubmit="handleActivation(event)">
+                    <div class="form-group">
+                        <label>Sender's Account Name</label>
+                        <input type="text" class="form-control" id="actSenderName" required placeholder="Name used for the transfer">
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Payment Screenshot</label>
+                        <div class="file-upload" onclick="document.getElementById('actProof').click()">
+                            <p style="color: var(--blue);">Click to upload payment proof</p>
+                            <input type="file" id="actProof" accept="image/*" style="display: none;" onchange="previewImage(this, 'actPreview')">
+                            <img id="actPreview" class="preview-img hidden">
+                        </div>
+                    </div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Submit Activation Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- USER DASHBOARD -->
+    <section id="dashboard" class="section">
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <div>
+                    <h2 class="orbitron">Hi, <span id="dashName">User</span> 👋</h2>
+                    <p style="color: var(--text-gray); margin-top: 5px; font-size: 13px;" id="dashPlan">NO PLAN</p>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="openNotifications()" title="Notifications" id="notifBtn"></button>
+                    <div class="user-avatar orbitron" id="dashAvatar">U</div>
+                </div>
+            </div>
+
+            <div class="activation-banner hidden" id="activationBanner">
+                <div><p>⚠️ Your account is not activated. Complete activation to access tasks and withdrawals.</p></div>
+                <button class="neon-btn" onclick="continueActivation()" style="padding: 10px 22px; font-size: 13px;">Activate Now</button>
+            </div>
+
+            <div class="balance-card" id="homePanel">
+                <div class="balance-card-top">
+                    <span>Total Balance</span>
+                    <button class="icon-btn" onclick="toggleBalanceVisibility()" id="balanceEyeBtn"></button>
+                </div>
+                <h2 class="balance-amount orbitron" id="balanceAmount">₦0.00</h2>
+                <div class="wallet-chips">
+                    <div class="wallet-chip"><p>Task Wallet</p><strong id="taskWalletAmt">₦0</strong></div>
+                    <div class="wallet-chip"><p>Deposit Wallet</p><strong id="depositWalletAmt">₦0</strong></div>
+                    <div class="wallet-chip"><p>Affiliate Wallet</p><strong id="affiliateWalletAmt">₦0</strong></div>
+                </div>
+            </div>
+
+            <div class="earn-summary">
+                <div><p>Total Earned</p><strong>₦<span id="dashEarnings">0</span></strong></div>
+                <div><p>Total Withdrawn</p><strong>₦<span id="dashWithdrawn">0</span></strong></div>
+                <button class="neon-btn-outline" style="padding: 10px 18px; font-size: 12px;" onclick="scrollToPanel('walletPanel')">History</button>
+            </div>
+
+            <h3 class="qa-title">Quick actions</h3>
+            <div class="quick-actions-grid" id="quickActions"></div>
+
+            <div class="panel" id="tasksPanel">
+                <div class="panel-header">
+                    <h3 class="orbitron">Available Tasks</h3>
+                    <button class="neon-btn" style="padding: 8px 20px; font-size: 12px;" onclick="refreshTasks()">Refresh</button>
+                </div>
+                <div class="task-list" id="taskList">
+                    <div class="empty-state"><p>No tasks available at the moment. Check back later!</p></div>
+                </div>
+                <div id="mySubmissionsWrap" style="margin-top: 22px;">
+                    <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px;">My Submissions</h4>
+                    <div id="mySubmissionsList"></div>
+                </div>
+            </div>
+
+            <div class="panel" id="referPanel">
+                <div class="panel-header"><h3 class="orbitron">Refer & Earn</h3></div>
+                <div class="referral-box">
+                    <p style="color: var(--text-gray); margin-bottom: 10px;">Your Referral Link</p>
+                    <div class="referral-link" id="referralLink">Loading...</div>
+                    <div class="share-row">
+                        <button class="neon-btn-outline" onclick="copyReferral()" style="padding: 8px 18px; font-size: 12px;">Copy Link</button>
+                        <button class="share-btn share-whatsapp" onclick="shareReferral('whatsapp')">WhatsApp</button>
+                        <button class="share-btn share-telegram" onclick="shareReferral('telegram')">Telegram</button>
+                    </div>
+                </div>
+                <p style="color: var(--text-gray); font-size: 14px; text-align: center;">
+                    Earn ₦<span id="refBonus">300</span> when a friend you refer activates their account!
+                </p>
+            </div>
+
+            <div class="panel" id="walletPanel">
+                <div class="panel-header"><h3 class="orbitron">Transaction History</h3></div>
+                <div class="wallet-actions" style="margin-top: 0; margin-bottom: 16px;">
+                    <button class="wallet-btn" onclick="openWithdrawModal()">Withdraw</button>
+                    <button class="wallet-btn" onclick="openDepositModal()">Fund Wallet</button>
+                </div>
+                <div id="withdrawProgressWrap" style="margin-bottom: 20px;"></div>
+                <div id="transactionList">
+                    <div class="empty-state"><p>No transactions yet</p></div>
+                </div>
+            </div>
+
+            <div class="panel" id="advertisePanel">
+                <div class="panel-header"><h3 class="orbitron">Advertise</h3></div>
+                <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 14px;">Promote your Telegram, WhatsApp, or business to our users.</p>
+                <button class="neon-btn" onclick="openAdModal()" style="width: 100%;">Create Ad Campaign</button>
+            </div>
+
+            <div class="panel" id="profilePanel">
+                <div class="panel-header"><h3 class="orbitron">Profile</h3></div>
+                <div class="profile-row"><span>Full Name</span><span id="profName">-</span></div>
+                <div class="profile-row"><span>Email</span><span id="profEmail">-</span></div>
+                <div class="profile-row"><span>Phone</span><span id="profPhone">-</span></div>
+                <div class="profile-row"><span>Plan</span><span id="profPlan">-</span></div>
+                <div class="profile-row"><span>Tasks Completed</span><span id="profTasks">0</span></div>
+                <div class="profile-row"><span>Referrals</span><span id="profReferrals">0</span></div>
+                <h4 style="font-size: 13px; margin: 20px 0 12px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px;">Badges</h4>
+                <div class="badge-grid" id="badgeGrid"></div>
+                <button class="neon-btn-outline" style="width: 100%; margin-top: 22px; color: var(--danger); border-color: var(--danger);" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="bottom-nav" id="bottomNav"></div>
+        <button class="fab fab-support" onclick="openSupportModal()" title="Support"></button>
+        <button class="fab fab-ads" onclick="openAdModal()"><span id="fabAdsIcon"></span> Advertise</button>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="admin" class="section">
+        <div class="admin-layout">
+            <div class="admin-sidebar">
+                <div class="logo orbitron">PAYVORA<br><span style="font-size: 12px; color: var(--text-gray); font-weight: 500;">ADMIN PANEL</span></div>
+                <ul class="admin-nav">
+                    <li><a href="#" class="active" onclick="showAdminTab('overview')">Overview</a></li>
+                    <li><a href="#" onclick="showAdminTab('users')">Users</a></li>
+                    <li><a href="#" onclick="showAdminTab('tasks')">Tasks</a></li>
+                    <li><a href="#" onclick="showAdminTab('submissions')">Task Submissions</a></li>
+                    <li><a href="#" onclick="showAdminTab('withdrawals')">Withdrawals</a></li>
+                    <li><a href="#" onclick="showAdminTab('deposits')">Deposits</a></li>
+                    <li><a href="#" onclick="showAdminTab('ads')">Ad Requests</a></li>
+                    <li><a href="#" onclick="showAdminTab('transactions')">Transactions</a></li>
+                    <li><a href="#" onclick="showAdminTab('settings')">Settings</a></li>
+                    <li><a href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </div>
+            <div class="admin-main">
+                <div class="dashboard-header">
+                    <h2 class="orbitron">Admin Dashboard</h2>
+                    <p style="color: var(--blue);">Administrator Access</p>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="admin-overview" class="tab-content active">
+                    <div class="admin-stats">
+                        <div class="stat-card"><h4>Total Users</h4><div class="value" id="adminTotalUsers">0</div></div>
+                        <div class="stat-card"><h4>Active Users</h4><div class="value" id="adminActiveUsers">0</div></div>
+                        <div class="stat-card"><h4>Pending Submissions</h4><div class="value" id="adminPendingSubmissions">0</div></div>
+                        <div class="stat-card"><h4>Total Revenue</h4><div class="value">₦<span id="adminRevenue">0</span></div></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">Recent Activity</h3></div>
+                        <div id="adminActivity"><div class="empty-state"><p>No recent activity</p></div></div>
+                    </div>
+                </div>
+
+                <!-- Users Tab -->
+                <div id="admin-users" class="tab-content">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="orbitron">All Users</h3>
+                            <input type="text" class="form-control" id="adminUserSearch" placeholder="Search name or email..." style="max-width: 240px; padding: 8px 14px; font-size: 13px;" oninput="loadAdminUsers()">
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Name</th><th>Email</th><th>Phone</th><th>Plan</th><th>Status</th><th>Balance</th><th>Joined</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="adminUsersTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Tab -->
+                <div id="admin-tasks" class="tab-content">
+                    <div class="panel" style="margin-bottom: 26px;">
+                        <div class="panel-header"><h3 class="orbitron">Create New Task</h3></div>
+                        <form onsubmit="handleCreateTask(event)">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group"><label>Task Title</label><input type="text" class="form-control" id="taskTitle" required placeholder="e.g. Join Telegram Channel"></div>
+                                <div class="form-group"><label>Reward (₦)</label><input type="number" class="form-control" id="taskReward" required min="10" placeholder="Amount"></div>
+                            </div>
+                            <div class="form-group"><label>Description</label><textarea class="form-control" id="taskDesc" rows="3" required placeholder="Task instructions..."></textarea></div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group">
+                                    <label>Plan Required</label>
+                                    <select class="form-control" id="taskPlan">
+                                        <option value="all">All Plans</option>
+                                        <option value="500">Basic (₦500)</option>
+                                        <option value="1000">Premium (₦1000)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group"><label>Task Link</label><input type="url" class="form-control" id="taskLink" placeholder="https://..."></div>
+                            </div>
+                            <button type="submit" class="neon-btn">Create Task</button>
+                        </form>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">Manage Tasks</h3></div>
+                        <div id="adminTaskList"></div>
+                    </div>
+                </div>
+
+                <!-- Submissions Tab -->
+                <div id="admin-submissions" class="tab-content">
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">Task Submissions Awaiting Review</h3></div>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>User</th><th>Task</th><th>Reward</th><th>Proof</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="adminSubmissionsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Withdrawals Tab -->
+                <div id="admin-withdrawals" class="tab-content">
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">Withdrawal Requests</h3></div>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>User</th><th>Amount</th><th>Bank</th><th>Account</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="adminWithdrawalsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deposits Tab -->
+                <div id="admin-deposits" class="tab-content">
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">Deposits & Activations</h3></div>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>User</th><th>Amount</th><th>Sender Name</th><th>Proof</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="adminDepositsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ads Tab -->
+                <div id="admin-ads" class="tab-content">
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">Ad Campaign Requests</h3></div>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>User</th><th>Title</th><th>Budget</th><th>Type</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="adminAdsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions Tab -->
+                <div id="admin-transactions" class="tab-content">
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">All Transactions</h3></div>
+                        <div id="adminTransactionList"></div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="admin-settings" class="tab-content">
+                    <div class="panel">
+                        <div class="panel-header"><h3 class="orbitron">Site Settings</h3></div>
+                        <form onsubmit="handleSettings(event)">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group"><label>Minimum Withdrawal (₦)</label><input type="number" class="form-control" id="settingMinWithdrawal" value="1000"></div>
+                                <div class="form-group"><label>Referral Bonus - Basic Plan (₦)</label><input type="number" class="form-control" id="settingRefBasic" value="300"></div>
+                                <div class="form-group"><label>Referral Bonus - Premium Plan (₦)</label><input type="number" class="form-control" id="settingRefPremium" value="600"></div>
+                                <div class="form-group"><label>Activation Fee - Basic (₦)</label><input type="number" class="form-control" id="settingActBasic" value="500"></div>
+                                <div class="form-group"><label>Activation Fee - Premium (₦)</label><input type="number" class="form-control" id="settingActPremium" value="1000"></div>
+                            </div>
+                            <div class="form-group"><label>Bank Account Name</label><input type="text" class="form-control" id="settingBankName" value="PAYVORA LTD"></div>
+                            <div class="form-group"><label>Bank Account Number</label><input type="text" class="form-control" id="settingBankNumber" value="0123456789"></div>
+                            <button type="submit" class="neon-btn">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== ICONS ====================
+        const ICON = {
+            tasks: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+            refer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>',
+            wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>',
+            profile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+            fund: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>',
+            data: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="4" y2="14"/><line x1="10" y1="20" x2="10" y2="10"/><line x1="16" y1="20" x2="16" y2="6"/><line x1="22" y1="20" x2="22" y2="3"/></svg>',
+            airtime: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>',
+            withdraw: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',
+            bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>',
+            sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
+            moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+            eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+            eyeOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a21.8 21.8 0 0 1 5.06-6.06M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a21.8 21.8 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>',
+            headset: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
+            megaphone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>',
+            home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+        };
+
+        // ==================== DATA STORE ====================
+        const DB = {
+            users: JSON.parse(localStorage.getItem('payvora_users')) || [],
+            tasks: JSON.parse(localStorage.getItem('payvora_tasks')) || [],
+            taskSubmissions: JSON.parse(localStorage.getItem('payvora_taskSubmissions')) || [],
+            transactions: JSON.parse(localStorage.getItem('payvora_transactions')) || [],
+            withdrawals: JSON.parse(localStorage.getItem('payvora_withdrawals')) || [],
+            deposits: JSON.parse(localStorage.getItem('payvora_deposits')) || [],
+            ads: JSON.parse(localStorage.getItem('payvora_ads')) || [],
+            settings: JSON.parse(localStorage.getItem('payvora_settings')) || {
+                minWithdrawal: 1000,
+                refBonusBasic: 300,
+                refBonusPremium: 600,
+                actBasic: 500,
+                actPremium: 1000,
+                bankName: 'PAYVORA LTD',
+                bankNumber: '0123456789'
+            }
+        };
+
+        let currentUser = JSON.parse(localStorage.getItem('payvora_currentUser')) || null;
+        let selectedPlanAmount = 0;
+        let balanceHidden = false;
+
+        // ==================== WALLET HELPERS ====================
+        function getBalance(user) {
+            return (user.taskWallet || 0) + (user.depositWallet || 0) + (user.affiliateWallet || 0);
+        }
+
+        function creditWallet(user, key, amount) {
+            user[key] = (user[key] || 0) + amount;
+        }
+
+        function debitWallets(user, amount) {
+            let remaining = amount;
+            const breakdown = { deposit: 0, task: 0, affiliate: 0 };
+            const take = (walletKey, breakdownKey) => {
+                if (remaining <= 0) return;
+                const avail = user[walletKey] || 0;
+                const takeAmt = Math.min(avail, remaining);
+                user[walletKey] = avail - takeAmt;
+                breakdown[breakdownKey] += takeAmt;
+                remaining -= takeAmt;
+            };
+            take('depositWallet', 'deposit');
+            take('taskWallet', 'task');
+            take('affiliateWallet', 'affiliate');
+            return breakdown;
+        }
+
+        function refundBreakdown(user, breakdown) {
+            if (!breakdown) return;
+            user.depositWallet = (user.depositWallet || 0) + (breakdown.deposit || 0);
+            user.taskWallet = (user.taskWallet || 0) + (breakdown.task || 0);
+            user.affiliateWallet = (user.affiliateWallet || 0) + (breakdown.affiliate || 0);
+        }
+
+        // ==================== INITIALIZATION ====================
+        function init() {
+            if (localStorage.getItem('payvora_theme') === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+            document.getElementById('themeToggleBtn').innerHTML = document.documentElement.classList.contains('dark-theme') ? ICON.sun : ICON.moon;
+            document.getElementById('balanceEyeBtn').innerHTML = ICON.eye;
+            document.getElementById('notifBtn').innerHTML = ICON.bell;
+            document.getElementById('fabAdsIcon').innerHTML = ICON.megaphone;
+            document.querySelector('.fab-support').innerHTML = ICON.headset;
+            renderQuickActions();
+            renderBottomNav();
+
+            if (DB.tasks.length === 0) {
+                DB.tasks = [
+                    { id: 1, title: 'Join Telegram Channel', description: 'Join our official Telegram channel and stay updated.', reward: 50, plan: 'all', link: 'https://t.me/payvora', status: 'active', createdAt: new Date().toISOString() },
+                    { id: 2, title: 'Follow on Twitter', description: 'Follow our Twitter page and retweet the pinned post.', reward: 75, plan: 'all', link: 'https://twitter.com/payvora', status: 'active', createdAt: new Date().toISOString() },
+                    { id: 3, title: 'Watch YouTube Video', description: 'Watch the full video and like it.', reward: 150, plan: '1000', link: 'https://youtube.com', status: 'active', createdAt: new Date().toISOString() },
+                    { id: 4, title: 'Download App', description: 'Download and install the partner app.', reward: 200, plan: '1000', link: '#', status: 'active', createdAt: new Date().toISOString() }
+                ];
+                saveDB();
+            }
+
+            updateNav();
+
+            if (currentUser) {
+                if (currentUser.isAdmin) {
+                    showSection('admin');
+                    loadAdminData();
+                } else {
+                    showSection('dashboard');
+                    loadDashboard();
+                }
+            }
+        }
+
+        function saveDB() {
+            localStorage.setItem('payvora_users', JSON.stringify(DB.users));
+            localStorage.setItem('payvora_tasks', JSON.stringify(DB.tasks));
+            localStorage.setItem('payvora_taskSubmissions', JSON.stringify(DB.taskSubmissions));
+            localStorage.setItem('payvora_transactions', JSON.stringify(DB.transactions));
+            localStorage.setItem('payvora_withdrawals', JSON.stringify(DB.withdrawals));
+            localStorage.setItem('payvora_deposits', JSON.stringify(DB.deposits));
+            localStorage.setItem('payvora_ads', JSON.stringify(DB.ads));
+            localStorage.setItem('payvora_settings', JSON.stringify(DB.settings));
+        }
+
+        // ==================== THEME ====================
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-theme');
+            const isDark = document.documentElement.classList.contains('dark-theme');
+            localStorage.setItem('payvora_theme', isDark ? 'dark' : 'light');
+            document.getElementById('themeToggleBtn').innerHTML = isDark ? ICON.sun : ICON.moon;
+        }
+
+        // ==================== QUICK ACTIONS / BOTTOM NAV ====================
+        function renderQuickActions() {
+            const items = [
+                { icon: 'tasks', title: 'Tasks', sub: 'Earn now', action: "scrollToPanel('tasksPanel')" },
+                { icon: 'refer', title: 'Refer', sub: 'Get bonus', action: "scrollToPanel('referPanel')" },
+                { icon: 'wallet', title: 'Wallet', sub: 'Manage', action: "scrollToPanel('walletPanel')" },
+                { icon: 'profile', title: 'Profile', sub: 'You', action: "scrollToPanel('profilePanel')" },
+                { icon: 'fund', title: 'Fund', sub: 'Top up', action: "openDepositModal()" },
+                { icon: 'data', title: 'Data', sub: 'Buy', action: "openDataModal()" },
+                { icon: 'airtime', title: 'Airtime', sub: 'Top-up', action: "openAirtimeModal()" },
+                { icon: 'withdraw', title: 'Withdraw', sub: 'Cash out', action: "openWithdrawModal()" }
+            ];
+            document.getElementById('quickActions').innerHTML = items.map(i => `
+                <div class="qa-card" onclick="${i.action}">
+                    <div class="qa-icon">${ICON[i.icon]}</div>
+                    <h4>${i.title}</h4>
+                    <p>${i.sub}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderBottomNav() {
+            const items = [
+                { icon: 'home', label: 'Home', target: 'homePanel' },
+                { icon: 'tasks', label: 'Tasks', target: 'tasksPanel' },
+                { icon: 'refer', label: 'Refer', target: 'referPanel' },
+                { icon: 'wallet', label: 'Wallet', target: 'walletPanel' },
+                { icon: 'profile', label: 'Profile', target: 'profilePanel' }
+            ];
+            document.getElementById('bottomNav').innerHTML = items.map(i => `
+                <button onclick="scrollToPanel('${i.target}')">${ICON[i.icon]}<span>${i.label}</span></button>
+            `).join('');
+        }
+
+        function scrollToPanel(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ==================== NAVIGATION ====================
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (sectionId === 'dashboard' && currentUser && !currentUser.isAdmin) {
+                loadDashboard();
+            }
+        }
+
+        function updateNav() {
+            const isLoggedIn = !!currentUser;
+            document.getElementById('navLogin').classList.toggle('hidden', isLoggedIn);
+            document.getElementById('navRegister').classList.toggle('hidden', isLoggedIn);
+            document.getElementById('navLogout').classList.toggle('hidden', !isLoggedIn);
+            document.getElementById('navDashboard').classList.toggle('hidden', !isLoggedIn || currentUser?.isAdmin);
+        }
+
+        function goToDashboard() {
+            if (currentUser?.isAdmin) {
+                showSection('admin');
+                loadAdminData();
+            } else {
+                showSection('dashboard');
+                loadDashboard();
+            }
+        }
+
+        // ==================== AUTH ====================
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value.toLowerCase();
+            const phone = document.getElementById('regPhone').value;
+            const password = document.getElementById('regPassword').value;
+            const refCode = document.getElementById('regRef').value.trim();
+
+            if (DB.users.find(u => u.email === email)) {
+                showToast('Email already registered!', 'error');
+                return;
+            }
+
+            const user = {
+                id: Date.now(),
+                name, email, phone, password,
+                taskWallet: 0,
+                depositWallet: 0,
+                affiliateWallet: 0,
+                totalEarnings: 0,
+                totalWithdrawn: 0,
+                tasksCompleted: 0,
+                referrals: 0,
+                plan: null,
+                isActivated: false,
+                isAdmin: false,
+                referralCode: 'REF' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                referredBy: null,
+                createdAt: new Date().toISOString()
+            };
+
+            if (refCode) {
+                const referrer = DB.users.find(u => u.referralCode === refCode);
+                if (referrer) {
+                    user.referredBy = referrer.id;
+                    referrer.referrals++;
+                }
+            }
+
+            DB.users.push(user);
+            saveDB();
+
+            currentUser = user;
+            localStorage.setItem('payvora_currentUser', JSON.stringify(currentUser));
+
+            showToast('Registration successful! Welcome to PAYVORA.', 'success');
+            updateNav();
+            showSection('dashboard');
+            loadDashboard();
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.toLowerCase();
+            const password = document.getElementById('loginPassword').value;
+
+            if (email === 'admin@payvora.name.ng' && password === 'admin123-') {
+                currentUser = { id: 0, name: 'Administrator', email: 'admin@payvora.name.ng', isAdmin: true, isActivated: true };
+                localStorage.setItem('payvora_currentUser', JSON.stringify(currentUser));
+                showToast('Welcome Admin!', 'success');
+                updateNav();
+                showSection('admin');
+                loadAdminData();
+                return;
+            }
+
+            const user = DB.users.find(u => u.email === email && u.password === password);
+            if (!user) {
+                showToast('Invalid email or password!', 'error');
+                return;
+            }
+
+            currentUser = user;
+            localStorage.setItem('payvora_currentUser', JSON.stringify(currentUser));
+            showToast('Login successful!', 'success');
+            updateNav();
+            showSection('dashboard');
+            loadDashboard();
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('payvora_currentUser');
+            updateNav();
+            showSection('home');
+            showToast('Logged out successfully', 'success');
+        }
+
+        // ==================== ACTIVATION ====================
+        function selectPlan(amount) {
+            selectedPlanAmount = amount;
+            if (!currentUser) {
+                showSection('register');
+                showToast('Please register first!', 'warning');
+                return;
+            }
+            currentUser.plan = amount;
+            const userIndex = DB.users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                DB.users[userIndex].plan = amount;
+                saveDB();
+                localStorage.setItem('payvora_currentUser', JSON.stringify(currentUser));
+            }
+            showSection('activation');
+            document.getElementById('activationAmount').textContent = amount;
+        }
+
+        function continueActivation() {
+            const amount = currentUser.plan || 500;
+            showSection('activation');
+            document.getElementById('activationAmount').textContent = amount;
+            selectedPlanAmount = amount;
+        }
+
+        function handleActivation(e) {
+            e.preventDefault();
+            const senderName = document.getElementById('actSenderName').value;
+            const proofFile = document.getElementById('actProof').files[0];
+
+            if (!proofFile) {
+                showToast('Please upload payment proof!', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const deposit = {
+                    id: Date.now(),
+                    userId: currentUser.id,
+                    userName: currentUser.name,
+                    userEmail: currentUser.email,
+                    amount: selectedPlanAmount || currentUser.plan || 500,
+                    senderName,
+                    proof: e.target.result,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                };
+
+                DB.deposits.push(deposit);
+                saveDB();
+                showToast('Activation request submitted! Awaiting admin approval.', 'success');
+                showSection('dashboard');
+                loadDashboard();
+            };
+            reader.readAsDataURL(proofFile);
+        }
+
+        function previewImage(input, previewId) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById(previewId);
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ==================== DASHBOARD ====================
+        function toggleBalanceVisibility() {
+            balanceHidden = !balanceHidden;
+            document.getElementById('balanceEyeBtn').innerHTML = balanceHidden ? ICON.eyeOff : ICON.eye;
+            loadDashboard();
+        }
+
+        function fmt(n) {
+            return balanceHidden ? '••••' : (n || 0).toLocaleString();
+        }
+
+        function loadDashboard() {
+            if (!currentUser || currentUser.isAdmin) return;
+
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (!user) return;
+
+            if (!user.referralCode) {
+                user.referralCode = 'REF' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            }
+            if (user.taskWallet === undefined) { user.taskWallet = 0; user.depositWallet = 0; user.affiliateWallet = 0; user.totalWithdrawn = 0; saveDB(); }
+
+            currentUser = user;
+            localStorage.setItem('payvora_currentUser', JSON.stringify(currentUser));
+
+            document.getElementById('dashName').textContent = user.name.split(' ')[0];
+            document.getElementById('dashAvatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('dashPlan').textContent = user.plan ? (user.plan == 500 ? 'BASIC PLAN' : 'PREMIUM PLAN') : 'NO PLAN SELECTED';
+
+            const balance = getBalance(user);
+            document.getElementById('balanceAmount').textContent = '₦' + fmt(balance);
+            document.getElementById('taskWalletAmt').textContent = '₦' + fmt(user.taskWallet);
+            document.getElementById('depositWalletAmt').textContent = '₦' + fmt(user.depositWallet);
+            document.getElementById('affiliateWalletAmt').textContent = '₦' + fmt(user.affiliateWallet);
+            document.getElementById('dashEarnings').textContent = fmt(user.totalEarnings);
+            document.getElementById('dashWithdrawn').textContent = fmt(user.totalWithdrawn);
+            document.getElementById('refBonus').textContent = user.plan == 1000 ? DB.settings.refBonusPremium : DB.settings.refBonusBasic;
+
+            document.getElementById('activationBanner').classList.toggle('hidden', user.isActivated);
+            document.getElementById('referralLink').textContent = `${window.location.origin}${window.location.pathname}?ref=${user.referralCode}`;
+
+            document.getElementById('profName').textContent = user.name;
+            document.getElementById('profEmail').textContent = user.email;
+            document.getElementById('profPhone').textContent = user.phone || 'N/A';
+            document.getElementById('profPlan').textContent = user.plan ? '₦' + user.plan : 'None';
+            document.getElementById('profTasks').textContent = user.tasksCompleted;
+            document.getElementById('profReferrals').textContent = user.referrals;
+
+            loadTasks();
+            loadTransactions();
+            loadMySubmissions();
+            renderWithdrawProgress(user);
+            renderBadges(user);
+        }
+
+        function loadTasks() {
+            const taskList = document.getElementById('taskList');
+            const user = DB.users.find(u => u.id === currentUser.id);
+
+            if (!user || !user.isActivated) {
+                taskList.innerHTML = '<div class="empty-state"><p>Activate your account to see available tasks</p></div>';
+                return;
+            }
+
+            const completedTasks = JSON.parse(localStorage.getItem(`payvora_completed_${user.id}`)) || [];
+            const submittedTasks = JSON.parse(localStorage.getItem(`payvora_submitted_${user.id}`)) || [];
+            const availableTasks = DB.tasks.filter(t =>
+                t.status === 'active' &&
+                !completedTasks.includes(t.id) &&
+                !submittedTasks.includes(t.id) &&
+                (t.plan === 'all' || t.plan === String(user.plan))
+            );
+
+            if (availableTasks.length === 0) {
+                taskList.innerHTML = '<div class="empty-state"><p>No tasks available right now. Check back later!</p></div>';
+                return;
+            }
+
+            taskList.innerHTML = availableTasks.map(task => `
+                <div class="task-item">
+                    <div class="task-info">
+                        <h4>${task.title}</h4>
+                        <p>${task.description}</p>
+                        ${task.link ? `<a href="${task.link}" target="_blank" style="color: var(--blue); font-size: 12px;">Open Link →</a>` : ''}
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="task-reward">+₦${task.reward}</div>
+                        <button class="neon-btn" style="padding: 6px 15px; font-size: 11px; margin-top: 8px;" onclick="startTaskSubmission(${task.id})">Complete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function startTaskSubmission(taskId) {
+            const task = DB.tasks.find(t => t.id === taskId);
+            if (!task) return;
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 10px;">Submit Proof</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">${task.title} — reward ₦${task.reward}. Do the task, then upload a screenshot showing it's done. An admin will review it before your wallet is credited.</p>
+                <form onsubmit="handleTaskSubmit(event, ${taskId})">
+                    <div class="form-group">
+                        <label>Upload Proof Screenshot</label>
+                        <div class="file-upload" onclick="document.getElementById('taskProof').click()">
+                            <p style="color: var(--blue);">Click to upload screenshot</p>
+                            <input type="file" id="taskProof" accept="image/*" style="display: none;" onchange="previewImage(this, 'taskProofPreview')">
+                            <img id="taskProofPreview" class="preview-img hidden">
+                        </div>
+                    </div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Submit for Review</button>
+                </form>
+            `);
+        }
+
+        function handleTaskSubmit(e, taskId) {
+            e.preventDefault();
+            const task = DB.tasks.find(t => t.id === taskId);
+            const proofFile = document.getElementById('taskProof').files[0];
+            if (!proofFile) {
+                showToast('Please upload a proof screenshot!', 'error');
+                return;
+            }
+
+            const user = DB.users.find(u => u.id === currentUser.id);
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const submission = {
+                    id: Date.now(),
+                    userId: user.id,
+                    userName: user.name,
+                    userEmail: user.email,
+                    taskId: task.id,
+                    taskTitle: task.title,
+                    reward: task.reward,
+                    proof: ev.target.result,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                };
+                DB.taskSubmissions.push(submission);
+
+                const submitted = JSON.parse(localStorage.getItem(`payvora_submitted_${user.id}`)) || [];
+                submitted.push(task.id);
+                localStorage.setItem(`payvora_submitted_${user.id}`, JSON.stringify(submitted));
+
+                saveDB();
+                closeModal();
+                showToast('Submitted! Awaiting admin review.', 'success');
+                loadDashboard();
+            };
+            reader.readAsDataURL(proofFile);
+        }
+
+        function loadMySubmissions() {
+            const wrap = document.getElementById('mySubmissionsList');
+            const mine = DB.taskSubmissions.filter(s => s.userId === currentUser.id).sort((a, b) => b.id - a.id);
+            if (mine.length === 0) {
+                wrap.innerHTML = '<p style="color: var(--text-gray); font-size: 13px;">No submissions yet.</p>';
+                return;
+            }
+            wrap.innerHTML = mine.slice(0, 8).map(s => `
+                <div class="submission-item">
+                    <span>${s.taskTitle} — ₦${s.reward}</span>
+                    <span class="badge ${s.status === 'approved' ? 'badge-success' : s.status === 'rejected' ? 'badge-danger' : 'badge-pending'}">${s.status}</span>
+                </div>
+            `).join('');
+        }
+
+        function loadTransactions() {
+            const userTxns = DB.transactions.filter(t => t.userId === currentUser.id).sort((a, b) => b.id - a.id);
+            const container = document.getElementById('transactionList');
+
+            if (userTxns.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No transactions yet</p></div>';
+                return;
+            }
+
+            container.innerHTML = userTxns.slice(0, 10).map(t => `
+                <div class="transaction-item ${t.type}">
+                    <div class="transaction-info">
+                        <h4>${t.description}</h4>
+                        <p>${new Date(t.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <div class="transaction-amount ${t.type}">
+                        ${t.type === 'credit' ? '+' : '-'}₦${t.amount.toLocaleString()}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function refreshTasks() {
+            loadTasks();
+            showToast('Tasks refreshed', 'success');
+        }
+
+        function copyReferral() {
+            const link = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                showToast('Referral link copied!', 'success');
+            });
+        }
+
+        function shareReferral(platform) {
+            const link = document.getElementById('referralLink').textContent;
+            const message = `Join me on Payvora and start earning from tasks, referrals and ads: ${link}`;
+            const url = platform === 'whatsapp'
+                ? `https://wa.me/?text=${encodeURIComponent(message)}`
+                : `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent('Join me on Payvora and start earning from tasks, referrals and ads.')}`;
+            window.open(url, '_blank');
+        }
+
+        // ==================== WITHDRAW PROGRESS & BADGES ====================
+        function renderWithdrawProgress(user) {
+            const wrap = document.getElementById('withdrawProgressWrap');
+            const balance = getBalance(user);
+            const min = DB.settings.minWithdrawal;
+            if (balance >= min) {
+                wrap.innerHTML = `<div class="progress-label"><span>Ready to withdraw</span><span>₦${fmt(balance)} / ₦${min.toLocaleString()}</span></div><div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>`;
+                return;
+            }
+            const pct = Math.min(100, Math.round((balance / min) * 100));
+            wrap.innerHTML = `<div class="progress-label"><span>₦${fmt(min - balance)} more to unlock withdrawal</span><span>₦${fmt(balance)} / ₦${min.toLocaleString()}</span></div><div class="progress-track"><div class="progress-fill" style="width: ${pct}%;"></div></div>`;
+        }
+
+        function renderBadges(user) {
+            const badges = [
+                { emoji: '🎯', name: 'First Task', earned: (user.tasksCompleted || 0) >= 1 },
+                { emoji: '⚡', name: 'Task Pro', earned: (user.tasksCompleted || 0) >= 10 },
+                { emoji: '🤝', name: 'First Referral', earned: (user.referrals || 0) >= 1 },
+                { emoji: '👑', name: 'Referral Champ', earned: (user.referrals || 0) >= 5 },
+                { emoji: '💰', name: 'Big Earner', earned: (user.totalEarnings || 0) >= 10000 },
+                { emoji: '✅', name: 'Activated', earned: !!user.isActivated }
+            ];
+            document.getElementById('badgeGrid').innerHTML = badges.map(b => `
+                <div class="badge-chip ${b.earned ? 'earned' : ''}">
+                    <div class="badge-emoji">${b.emoji}</div>
+                    <div class="badge-name">${b.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function openNotifications() {
+            if (!currentUser) return;
+            const uid = currentUser.id;
+            const events = [];
+            DB.taskSubmissions.filter(s => s.userId === uid && s.status !== 'pending').forEach(s =>
+                events.push({ date: s.createdAt, text: `Task "${s.taskTitle}" was ${s.status}`, type: s.status === 'approved' ? 'approved' : 'rejected' }));
+            DB.withdrawals.filter(w => w.userId === uid && w.status !== 'pending').forEach(w =>
+                events.push({ date: w.createdAt, text: `Withdrawal of ₦${w.amount.toLocaleString()} was ${w.status}`, type: w.status === 'approved' ? 'approved' : 'rejected' }));
+            DB.deposits.filter(d => d.userId === uid && d.status !== 'pending').forEach(d =>
+                events.push({ date: d.createdAt, text: `Deposit of ₦${d.amount.toLocaleString()} was ${d.status}`, type: d.status === 'approved' ? 'approved' : 'rejected' }));
+            events.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            const html = events.length
+                ? events.slice(0, 10).map(e => `<div class="notif-item ${e.type}">${e.text}</div>`).join('')
+                : '<div class="empty-state"><p>No notifications yet</p></div>';
+
+            showModal(`<h2 class="orbitron neon-text" style="margin-bottom: 18px;">Notifications</h2>${html}`);
+        }
+
+        function openSupportModal() {
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 14px;">Need Help?</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">Reach our support team through any of these channels and we'll get back to you shortly.</p>
+                <div class="profile-row"><span>Email</span><span>support@payvora.name.ng</span></div>
+                <div class="profile-row"><span>Telegram</span><span>@payvorasupport</span></div>
+                <div class="profile-row"><span>Hours</span><span>9am - 9pm daily</span></div>
+            `);
+        }
+
+        // ==================== WALLET MODALS ====================
+        function openWithdrawModal() {
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (!user.isActivated) { showToast('Activate your account first!', 'error'); return; }
+            const balance = getBalance(user);
+            if (balance < DB.settings.minWithdrawal) {
+                showToast(`Minimum withdrawal is ₦${DB.settings.minWithdrawal}`, 'error');
+                return;
+            }
+
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 20px;">Withdraw Funds</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">Available: ₦${balance.toLocaleString()} | Min: ₦${DB.settings.minWithdrawal}</p>
+                <form onsubmit="handleWithdraw(event)">
+                    <div class="form-group"><label>Amount (₦)</label><input type="number" class="form-control" id="withdrawAmount" max="${balance}" min="${DB.settings.minWithdrawal}" required></div>
+                    <div class="form-group">
+                        <label>Bank Name</label>
+                        <select class="form-control" id="withdrawBank" required>
+                            <option value="">Select Bank</option>
+                            <option value="First Bank">First Bank</option>
+                            <option value="GTBank">GTBank</option>
+                            <option value="Access Bank">Access Bank</option>
+                            <option value="UBA">UBA</option>
+                            <option value="Zenith Bank">Zenith Bank</option>
+                            <option value="FCMB">FCMB</option>
+                            <option value="Fidelity">Fidelity</option>
+                            <option value="EcoBank">EcoBank</option>
+                            <option value="Union Bank">Union Bank</option>
+                            <option value="Stanbic">Stanbic IBTC</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Account Number</label><input type="text" class="form-control" id="withdrawAccountNumber" required placeholder="10 digit account number" maxlength="10"></div>
+                    <div class="form-group"><label>Account Name</label><input type="text" class="form-control" id="withdrawAccountName" required placeholder="Name on account"></div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Request Withdrawal</button>
+                </form>
+            `);
+        }
+
+        function handleWithdraw(e) {
+            e.preventDefault();
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+            const bank = document.getElementById('withdrawBank').value;
+            const accountNumber = document.getElementById('withdrawAccountNumber').value;
+            const accountName = document.getElementById('withdrawAccountName').value;
+
+            const user = DB.users.find(u => u.id === currentUser.id);
+            const balance = getBalance(user);
+
+            if (amount > balance) { showToast('Insufficient balance!', 'error'); return; }
+            if (amount < DB.settings.minWithdrawal) { showToast(`Minimum withdrawal is ₦${DB.settings.minWithdrawal}`, 'error'); return; }
+
+            const breakdown = debitWallets(user, amount);
+
+            const withdrawal = {
+                id: Date.now(), userId: user.id, userName: user.name, userEmail: user.email,
+                amount, bank, accountNumber, accountName, breakdown, status: 'pending', createdAt: new Date().toISOString()
+            };
+
+            DB.withdrawals.push(withdrawal);
+
+            const transaction = {
+                id: Date.now(), userId: user.id, type: 'debit', amount,
+                description: `Withdrawal to ${bank} - ${accountNumber}`, status: 'pending', createdAt: new Date().toISOString()
+            };
+            DB.transactions.push(transaction);
+
+            saveDB();
+            localStorage.setItem('payvora_currentUser', JSON.stringify(user));
+
+            closeModal();
+            showToast('Withdrawal request submitted!', 'success');
+            loadDashboard();
+        }
+
+        function openAirtimeModal() {
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (!user.isActivated) { showToast('Activate your account first!', 'error'); return; }
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 20px;">Buy Airtime</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">Balance: ₦${getBalance(user).toLocaleString()}</p>
+                <form onsubmit="handleAirtime(event)">
+                    <div class="form-group">
+                        <label>Network</label>
+                        <select class="form-control" id="airtimeNetwork" required>
+                            <option value="">Select Network</option><option value="MTN">MTN</option><option value="Airtel">Airtel</option><option value="Glo">Glo</option><option value="9mobile">9mobile</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" class="form-control" id="airtimePhone" required placeholder="08012345678"></div>
+                    <div class="form-group"><label>Amount (₦)</label><input type="number" class="form-control" id="airtimeAmount" min="50" required></div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Purchase Airtime</button>
+                </form>
+            `);
+        }
+
+        function handleAirtime(e) {
+            e.preventDefault();
+            const network = document.getElementById('airtimeNetwork').value;
+            const phone = document.getElementById('airtimePhone').value;
+            const amount = parseInt(document.getElementById('airtimeAmount').value);
+
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (amount > getBalance(user)) { showToast('Insufficient balance!', 'error'); return; }
+
+            debitWallets(user, amount);
+            const transaction = { id: Date.now(), userId: user.id, type: 'debit', amount, description: `Airtime Purchase - ${network} ${phone}`, status: 'completed', createdAt: new Date().toISOString() };
+            DB.transactions.push(transaction);
+            saveDB();
+            localStorage.setItem('payvora_currentUser', JSON.stringify(user));
+
+            closeModal();
+            showToast('Airtime purchased successfully!', 'success');
+            loadDashboard();
+        }
+
+        function openDataModal() {
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (!user.isActivated) { showToast('Activate your account first!', 'error'); return; }
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 20px;">Buy Data</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">Balance: ₦${getBalance(user).toLocaleString()}</p>
+                <form onsubmit="handleData(event)">
+                    <div class="form-group">
+                        <label>Network</label>
+                        <select class="form-control" id="dataNetwork" required>
+                            <option value="">Select Network</option><option value="MTN">MTN</option><option value="Airtel">Airtel</option><option value="Glo">Glo</option><option value="9mobile">9mobile</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" class="form-control" id="dataPhone" required placeholder="08012345678"></div>
+                    <div class="form-group">
+                        <label>Data Plan</label>
+                        <select class="form-control" id="dataPlan" required>
+                            <option value="">Select Plan</option>
+                            <option value="500MB - ₦200">500MB - ₦200</option>
+                            <option value="1GB - ₦350">1GB - ₦350</option>
+                            <option value="2GB - ₦600">2GB - ₦600</option>
+                            <option value="3GB - ₦900">3GB - ₦900</option>
+                            <option value="5GB - ₦1500">5GB - ₦1500</option>
+                            <option value="10GB - ₦3000">10GB - ₦3000</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Purchase Data</button>
+                </form>
+            `);
+        }
+
+        function handleData(e) {
+            e.preventDefault();
+            const network = document.getElementById('dataNetwork').value;
+            const phone = document.getElementById('dataPhone').value;
+            const plan = document.getElementById('dataPlan').value;
+            const amount = parseInt(plan.split('₦')[1]);
+
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (amount > getBalance(user)) { showToast('Insufficient balance!', 'error'); return; }
+
+            debitWallets(user, amount);
+            const transaction = { id: Date.now(), userId: user.id, type: 'debit', amount, description: `Data Purchase - ${network} ${plan} for ${phone}`, status: 'completed', createdAt: new Date().toISOString() };
+            DB.transactions.push(transaction);
+            saveDB();
+            localStorage.setItem('payvora_currentUser', JSON.stringify(user));
+
+            closeModal();
+            showToast('Data purchased successfully!', 'success');
+            loadDashboard();
+        }
+
+        function openDepositModal() {
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 20px;">Fund Wallet</h2>
+                <div style="background: var(--dark-gray); padding: 20px; margin-bottom: 20px; border: 1px solid var(--border-soft); border-radius: 14px;">
+                    <h4 style="color: var(--blue); margin-bottom: 15px; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px;">Bank Transfer</h4>
+                    <p style="margin-bottom: 10px;"><strong>Bank:</strong> First Bank of Nigeria</p>
+                    <p style="margin-bottom: 10px;"><strong>Name:</strong> ${DB.settings.bankName}</p>
+                    <p style="margin-bottom: 10px;"><strong>Account:</strong> <span style="color: var(--blue); font-family: 'Poppins', monospace; font-size: 18px; font-weight: 700;">${DB.settings.bankNumber}</span></p>
+                </div>
+                <form onsubmit="handleDeposit(event)">
+                    <div class="form-group"><label>Amount (₦)</label><input type="number" class="form-control" id="depositAmount" required min="100"></div>
+                    <div class="form-group"><label>Sender's Name</label><input type="text" class="form-control" id="depositSender" required></div>
+                    <div class="form-group">
+                        <label>Upload Proof</label>
+                        <div class="file-upload" onclick="document.getElementById('depositProof').click()">
+                            <p style="color: var(--blue);">Click to upload screenshot</p>
+                            <input type="file" id="depositProof" accept="image/*" style="display: none;" onchange="previewImage(this, 'depositPreview')">
+                            <img id="depositPreview" class="preview-img hidden">
+                        </div>
+                    </div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Submit Deposit</button>
+                </form>
+            `);
+        }
+
+        function handleDeposit(e) {
+            e.preventDefault();
+            const amount = parseInt(document.getElementById('depositAmount').value);
+            const sender = document.getElementById('depositSender').value;
+            const proofFile = document.getElementById('depositProof').files[0];
+
+            if (!proofFile) { showToast('Please upload proof!', 'error'); return; }
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const deposit = {
+                    id: Date.now(), userId: currentUser.id, userName: currentUser.name, userEmail: currentUser.email,
+                    amount, senderName: sender, proof: evt.target.result, type: 'wallet', status: 'pending', createdAt: new Date().toISOString()
+                };
+                DB.deposits.push(deposit);
+                saveDB();
+                closeModal();
+                showToast('Deposit request submitted for approval!', 'success');
+            };
+            reader.readAsDataURL(proofFile);
+        }
+
+        function openAdModal() {
+            if (!currentUser || currentUser.isAdmin) { showToast('Login to create an ad campaign!', 'error'); return; }
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (!user.isActivated) { showToast('Activate your account first!', 'error'); return; }
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 20px;">Create Ad Campaign</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">Promote your channel/product to our users. Balance: ₦${getBalance(user).toLocaleString()}</p>
+                <form onsubmit="handleAdSubmit(event)">
+                    <div class="form-group"><label>Campaign Title</label><input type="text" class="form-control" id="adTitle" required placeholder="e.g. Join My Telegram Channel"></div>
+                    <div class="form-group">
+                        <label>Ad Type</label>
+                        <select class="form-control" id="adType" required>
+                            <option value="telegram">Telegram Channel</option><option value="whatsapp">WhatsApp Group</option><option value="website">Website Visit</option><option value="app">App Download</option><option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Link URL</label><input type="url" class="form-control" id="adLink" required placeholder="https://..."></div>
+                    <div class="form-group"><label>Description</label><textarea class="form-control" id="adDesc" rows="3" required placeholder="What users need to do..."></textarea></div>
+                    <div class="form-group"><label>Budget (₦)</label><input type="number" class="form-control" id="adBudget" required min="500" placeholder="Min ₦500"></div>
+                    <div class="form-group"><label>Reward per User (₦)</label><input type="number" class="form-control" id="adReward" required min="10" placeholder="How much users earn"></div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Submit Ad Request</button>
+                </form>
+            `);
+        }
+
+        function handleAdSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('adTitle').value;
+            const type = document.getElementById('adType').value;
+            const link = document.getElementById('adLink').value;
+            const desc = document.getElementById('adDesc').value;
+            const budget = parseInt(document.getElementById('adBudget').value);
+            const reward = parseInt(document.getElementById('adReward').value);
+
+            const user = DB.users.find(u => u.id === currentUser.id);
+            if (budget > getBalance(user)) { showToast('Insufficient balance for this campaign!', 'error'); return; }
+
+            const breakdown = debitWallets(user, budget);
+
+            const ad = {
+                id: Date.now(), userId: user.id, userName: user.name, userEmail: user.email,
+                title, type, link, description: desc, budget, reward, breakdown, status: 'pending', createdAt: new Date().toISOString()
+            };
+            DB.ads.push(ad);
+
+            const transaction = { id: Date.now(), userId: user.id, type: 'debit', amount: budget, description: `Ad Campaign: ${title}`, status: 'completed', createdAt: new Date().toISOString() };
+            DB.transactions.push(transaction);
+            saveDB();
+            localStorage.setItem('payvora_currentUser', JSON.stringify(user));
+
+            closeModal();
+            showToast('Ad campaign submitted for approval!', 'success');
+            loadDashboard();
+        }
+
+        // ==================== MODAL SYSTEM ====================
+        function showModal(content) {
+            document.getElementById('modalBody').innerHTML = content;
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        function viewProof(src) {
+            showModal(`<h2 class="orbitron neon-text" style="margin-bottom: 16px;">Proof</h2><img src="${src}" style="max-width: 100%; border-radius: 12px;">`);
+        }
+
+        // ==================== ADMIN PANEL ====================
+        function showAdminTab(tabName) {
+            document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('admin-' + tabName).classList.add('active');
+
+            if (tabName === 'users') loadAdminUsers();
+            if (tabName === 'tasks') loadAdminTasks();
+            if (tabName === 'submissions') loadAdminSubmissions();
+            if (tabName === 'withdrawals') loadAdminWithdrawals();
+            if (tabName === 'deposits') loadAdminDeposits();
+            if (tabName === 'ads') loadAdminAds();
+            if (tabName === 'transactions') loadAdminTransactions();
+            if (tabName === 'settings') loadAdminSettings();
+        }
+
+        function loadAdminData() {
+            document.getElementById('adminTotalUsers').textContent = DB.users.length;
+            document.getElementById('adminActiveUsers').textContent = DB.users.filter(u => u.isActivated).length;
+            document.getElementById('adminPendingSubmissions').textContent = DB.taskSubmissions.filter(s => s.status === 'pending').length;
+
+            const revenue = DB.deposits.filter(d => d.status === 'approved').reduce((sum, d) => sum + d.amount, 0);
+            document.getElementById('adminRevenue').textContent = revenue.toLocaleString();
+
+            const recent = [...DB.transactions, ...DB.withdrawals, ...DB.deposits]
+                .sort((a, b) => b.id - a.id)
+                .slice(0, 10);
+
+            const activityDiv = document.getElementById('adminActivity');
+            if (recent.length === 0) {
+                activityDiv.innerHTML = '<div class="empty-state"><p>No recent activity</p></div>';
+            } else {
+                activityDiv.innerHTML = recent.map(item => {
+                    let text = '', color = 'var(--text-gray)';
+                    if (item.type === 'credit') { text = `+₦${item.amount} - ${item.description}`; color = 'var(--success)'; }
+                    else if (item.type === 'debit') { text = `-₦${item.amount} - ${item.description}`; color = 'var(--danger)'; }
+                    else if (item.status) { text = `${item.userName || 'User'} - ₦${item.amount} - ${item.status}`; }
+                    return `<div style="padding: 12px; border-bottom: 1px solid var(--border-soft); color: ${color}; font-size: 14px;">${text} <span style="float: right; color: var(--text-gray); font-size: 12px;">${new Date(item.createdAt).toLocaleDateString()}</span></div>`;
+                }).join('');
+            }
+        }
+
+        function loadAdminUsers() {
+            const tbody = document.getElementById('adminUsersTable');
+            const searchEl = document.getElementById('adminUserSearch');
+            const q = (searchEl ? searchEl.value : '').trim().toLowerCase();
+            const list = q ? DB.users.filter(u => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)) : DB.users;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center;">${q ? 'No users match your search' : 'No users found'}</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = list.map(u => `
+                <tr>
+                    <td>${u.name}</td>
+                    <td>${u.email}</td>
+                    <td>${u.phone || 'N/A'}</td>
+                    <td>${u.plan ? '₦' + u.plan : 'None'}</td>
+                    <td><span class="badge ${u.isActivated ? 'badge-success' : 'badge-pending'}">${u.isActivated ? 'Active' : 'Pending'}</span></td>
+                    <td>₦${getBalance(u).toLocaleString()}</td>
+                    <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px;" onclick="adminEditUser(${u.id})">Edit</button>
+                        <button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px; border-color: var(--danger); color: var(--danger);" onclick="adminDeleteUser(${u.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadAdminTasks() {
+            const container = document.getElementById('adminTaskList');
+            if (DB.tasks.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No tasks created yet</p></div>';
+                return;
+            }
+            container.innerHTML = DB.tasks.map(t => `
+                <div class="task-item" style="margin-bottom: 10px;">
+                    <div class="task-info">
+                        <h4>${t.title}</h4>
+                        <p>Reward: ₦${t.reward} | Plan: ${t.plan} | Status: ${t.status}</p>
+                    </div>
+                    <button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px; border-color: var(--danger); color: var(--danger);" onclick="adminDeleteTask(${t.id})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function handleCreateTask(e) {
+            e.preventDefault();
+            const task = {
+                id: Date.now(),
+                title: document.getElementById('taskTitle').value,
+                description: document.getElementById('taskDesc').value,
+                reward: parseInt(document.getElementById('taskReward').value),
+                plan: document.getElementById('taskPlan').value,
+                link: document.getElementById('taskLink').value,
+                status: 'active',
+                createdAt: new Date().toISOString()
+            };
+            DB.tasks.push(task);
+            saveDB();
+            showToast('Task created successfully!', 'success');
+            e.target.reset();
+            loadAdminTasks();
+        }
+
+        function adminDeleteTask(taskId) {
+            if (!confirm('Delete this task?')) return;
+            DB.tasks = DB.tasks.filter(t => t.id !== taskId);
+            saveDB();
+            loadAdminTasks();
+            showToast('Task deleted', 'success');
+        }
+
+        function loadAdminSubmissions() {
+            const tbody = document.getElementById('adminSubmissionsTable');
+            const pending = DB.taskSubmissions.filter(s => s.status === 'pending').sort((a, b) => a.id - b.id);
+            if (pending.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No pending submissions</td></tr>';
+                return;
+            }
+            tbody.innerHTML = pending.map(s => `
+                <tr>
+                    <td>${s.userName}</td>
+                    <td>${s.taskTitle}</td>
+                    <td>₦${s.reward}</td>
+                    <td><button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px;" onclick="viewProof('${s.proof}')">View</button></td>
+                    <td>${new Date(s.createdAt).toLocaleDateString()}</td>
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>
+                        <button class="neon-btn" style="padding: 4px 10px; font-size: 10px;" onclick="approveTaskSubmission(${s.id})">Approve</button>
+                        <button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px; border-color: var(--danger); color: var(--danger);" onclick="declineTaskSubmission(${s.id})">Decline</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveTaskSubmission(id) {
+            const sub = DB.taskSubmissions.find(s => s.id === id);
+            if (!sub) return;
+            sub.status = 'approved';
+
+            const user = DB.users.find(u => u.id === sub.userId);
+            if (user) {
+                creditWallet(user, 'taskWallet', sub.reward);
+                user.totalEarnings = (user.totalEarnings || 0) + sub.reward;
+                user.tasksCompleted = (user.tasksCompleted || 0) + 1;
+
+                const completed = JSON.parse(localStorage.getItem(`payvora_completed_${user.id}`)) || [];
+                completed.push(sub.taskId);
+                localStorage.setItem(`payvora_completed_${user.id}`, JSON.stringify(completed));
+
+                const transaction = { id: Date.now(), userId: user.id, type: 'credit', amount: sub.reward, description: `Task Reward: ${sub.taskTitle}`, status: 'completed', createdAt: new Date().toISOString() };
+                DB.transactions.push(transaction);
+            }
+
+            saveDB();
+            loadAdminSubmissions();
+            loadAdminData();
+            showToast('Submission approved and wallet credited!', 'success');
+        }
+
+        function declineTaskSubmission(id) {
+            const sub = DB.taskSubmissions.find(s => s.id === id);
+            if (!sub) return;
+            sub.status = 'rejected';
+
+            const submitted = JSON.parse(localStorage.getItem(`payvora_submitted_${sub.userId}`)) || [];
+            const idx = submitted.indexOf(sub.taskId);
+            if (idx !== -1) submitted.splice(idx, 1);
+            localStorage.setItem(`payvora_submitted_${sub.userId}`, JSON.stringify(submitted));
+
+            saveDB();
+            loadAdminSubmissions();
+            loadAdminData();
+            showToast('Submission declined. User can resubmit.', 'warning');
+        }
+
+        function loadAdminWithdrawals() {
+            const tbody = document.getElementById('adminWithdrawalsTable');
+            const pending = DB.withdrawals.filter(w => w.status === 'pending');
+            if (pending.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No pending withdrawals</td></tr>';
+                return;
+            }
+            tbody.innerHTML = pending.map(w => `
+                <tr>
+                    <td>${w.userName}</td>
+                    <td>₦${w.amount.toLocaleString()}</td>
+                    <td>${w.bank}</td>
+                    <td>${w.accountNumber}</td>
+                    <td>${new Date(w.createdAt).toLocaleDateString()}</td>
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>
+                        <button class="neon-btn" style="padding: 4px 10px; font-size: 10px;" onclick="approveWithdrawal(${w.id})">Approve</button>
+                        <button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px; border-color: var(--danger); color: var(--danger);" onclick="rejectWithdrawal(${w.id})">Reject</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveWithdrawal(id) {
+            const w = DB.withdrawals.find(x => x.id === id);
+            if (!w) return;
+            w.status = 'approved';
+
+            const user = DB.users.find(u => u.id === w.userId);
+            if (user) user.totalWithdrawn = (user.totalWithdrawn || 0) + w.amount;
+
+            const txn = DB.transactions.find(t => t.userId === w.userId && t.amount === w.amount && t.type === 'debit' && t.status === 'pending');
+            if (txn) txn.status = 'completed';
+
+            saveDB();
+            loadAdminWithdrawals();
+            loadAdminData();
+            showToast('Withdrawal approved!', 'success');
+        }
+
+        function rejectWithdrawal(id) {
+            const w = DB.withdrawals.find(x => x.id === id);
+            if (!w) return;
+            w.status = 'rejected';
+
+            const user = DB.users.find(u => u.id === w.userId);
+            if (user) refundBreakdown(user, w.breakdown);
+
+            const txn = DB.transactions.find(t => t.userId === w.userId && t.amount === w.amount && t.type === 'debit' && t.status === 'pending');
+            if (txn) { txn.status = 'rejected'; txn.description += ' (Refunded)'; }
+
+            saveDB();
+            loadAdminWithdrawals();
+            loadAdminData();
+            showToast('Withdrawal rejected and refunded', 'warning');
+        }
+
+        function loadAdminDeposits() {
+            const tbody = document.getElementById('adminDepositsTable');
+            const pending = DB.deposits.filter(d => d.status === 'pending');
+            if (pending.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No pending deposits</td></tr>';
+                return;
+            }
+            tbody.innerHTML = pending.map(d => `
+                <tr>
+                    <td>${d.userName}</td>
+                    <td>₦${d.amount.toLocaleString()}</td>
+                    <td>${d.senderName}</td>
+                    <td><button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px;" onclick="viewProof('${d.proof}')">View</button></td>
+                    <td>${new Date(d.createdAt).toLocaleDateString()}</td>
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>
+                        <button class="neon-btn" style="padding: 4px 10px; font-size: 10px;" onclick="approveDeposit(${d.id})">Approve</button>
+                        <button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px; border-color: var(--danger); color: var(--danger);" onclick="rejectDeposit(${d.id})">Reject</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveDeposit(id) {
+            const d = DB.deposits.find(x => x.id === id);
+            if (!d) return;
+            d.status = 'approved';
+
+            const user = DB.users.find(u => u.id === d.userId);
+            if (user) {
+                if (d.type === 'wallet') {
+                    creditWallet(user, 'depositWallet', d.amount);
+                    const transaction = { id: Date.now(), userId: user.id, type: 'credit', amount: d.amount, description: 'Wallet Deposit Approved', status: 'completed', createdAt: new Date().toISOString() };
+                    DB.transactions.push(transaction);
+                } else {
+                    user.isActivated = true;
+                    if (user.referredBy) {
+                        const referrer = DB.users.find(u => u.id == user.referredBy);
+                        if (referrer && referrer.isActivated) {
+                            const bonus = user.plan == 1000 ? DB.settings.refBonusPremium : DB.settings.refBonusBasic;
+                            creditWallet(referrer, 'affiliateWallet', bonus);
+                            referrer.totalEarnings = (referrer.totalEarnings || 0) + bonus;
+                            const refTxn = { id: Date.now(), userId: referrer.id, type: 'credit', amount: bonus, description: `Referral Bonus from ${user.name}`, status: 'completed', createdAt: new Date().toISOString() };
+                            DB.transactions.push(refTxn);
+                        }
+                    }
+                }
+            }
+
+            saveDB();
+            loadAdminDeposits();
+            loadAdminData();
+            showToast('Deposit approved!', 'success');
+        }
+
+        function rejectDeposit(id) {
+            const d = DB.deposits.find(x => x.id === id);
+            if (!d) return;
+            d.status = 'rejected';
+            saveDB();
+            loadAdminDeposits();
+            showToast('Deposit rejected', 'warning');
+        }
+
+        function loadAdminAds() {
+            const tbody = document.getElementById('adminAdsTable');
+            const pending = DB.ads.filter(a => a.status === 'pending');
+            if (pending.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No pending ad requests</td></tr>';
+                return;
+            }
+            tbody.innerHTML = pending.map(a => `
+                <tr>
+                    <td>${a.userName}</td>
+                    <td>${a.title}</td>
+                    <td>₦${a.budget.toLocaleString()}</td>
+                    <td>${a.type}</td>
+                    <td>${new Date(a.createdAt).toLocaleDateString()}</td>
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>
+                        <button class="neon-btn" style="padding: 4px 10px; font-size: 10px;" onclick="approveAd(${a.id})">Approve</button>
+                        <button class="neon-btn-outline" style="padding: 4px 10px; font-size: 10px; border-color: var(--danger); color: var(--danger);" onclick="rejectAd(${a.id})">Reject</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approveAd(id) {
+            const ad = DB.ads.find(a => a.id === id);
+            if (!ad) return;
+            ad.status = 'approved';
+
+            const task = {
+                id: Date.now(), title: ad.title, description: ad.description + (ad.link ? ` Link: ${ad.link}` : ''),
+                reward: ad.reward, plan: 'all', link: ad.link, status: 'active', createdAt: new Date().toISOString(), adId: ad.id
+            };
+            DB.tasks.push(task);
+
+            saveDB();
+            loadAdminAds();
+            showToast('Ad approved and task created!', 'success');
+        }
+
+        function rejectAd(id) {
+            const ad = DB.ads.find(a => a.id === id);
+            if (!ad) return;
+            ad.status = 'rejected';
+
+            const user = DB.users.find(u => u.id === ad.userId);
+            if (user) refundBreakdown(user, ad.breakdown);
+
+            saveDB();
+            loadAdminAds();
+            showToast('Ad rejected and budget refunded', 'warning');
+        }
+
+        function loadAdminTransactions() {
+            const container = document.getElementById('adminTransactionList');
+            const txns = DB.transactions.sort((a, b) => b.id - a.id);
+            if (txns.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No transactions</p></div>';
+                return;
+            }
+            container.innerHTML = txns.slice(0, 50).map(t => `
+                <div class="transaction-item ${t.type}">
+                    <div class="transaction-info">
+                        <h4>${t.description}</h4>
+                        <p>User ID: ${t.userId} | ${new Date(t.createdAt).toLocaleString()}</p>
+                    </div>
+                    <div class="transaction-amount ${t.type}">
+                        ${t.type === 'credit' ? '+' : '-'}₦${t.amount.toLocaleString()}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadAdminSettings() {
+            document.getElementById('settingMinWithdrawal').value = DB.settings.minWithdrawal;
+            document.getElementById('settingRefBasic').value = DB.settings.refBonusBasic;
+            document.getElementById('settingRefPremium').value = DB.settings.refBonusPremium;
+            document.getElementById('settingActBasic').value = DB.settings.actBasic;
+            document.getElementById('settingActPremium').value = DB.settings.actPremium;
+            document.getElementById('settingBankName').value = DB.settings.bankName;
+            document.getElementById('settingBankNumber').value = DB.settings.bankNumber;
+        }
+
+        function handleSettings(e) {
+            e.preventDefault();
+            DB.settings = {
+                minWithdrawal: parseInt(document.getElementById('settingMinWithdrawal').value),
+                refBonusBasic: parseInt(document.getElementById('settingRefBasic').value),
+                refBonusPremium: parseInt(document.getElementById('settingRefPremium').value),
+                actBasic: parseInt(document.getElementById('settingActBasic').value),
+                actPremium: parseInt(document.getElementById('settingActPremium').value),
+                bankName: document.getElementById('settingBankName').value,
+                bankNumber: document.getElementById('settingBankNumber').value
+            };
+            saveDB();
+            showToast('Settings saved!', 'success');
+        }
+
+        function adminEditUser(userId) {
+            const user = DB.users.find(u => u.id === userId);
+            if (!user) return;
+            showModal(`
+                <h2 class="orbitron neon-text" style="margin-bottom: 20px;">Edit User</h2>
+                <form onsubmit="saveUserEdit(event, ${userId})">
+                    <div class="form-group"><label>Task Wallet (₦)</label><input type="number" class="form-control" id="editTaskWallet" value="${user.taskWallet || 0}"></div>
+                    <div class="form-group"><label>Deposit Wallet (₦)</label><input type="number" class="form-control" id="editDepositWallet" value="${user.depositWallet || 0}"></div>
+                    <div class="form-group"><label>Affiliate Wallet (₦)</label><input type="number" class="form-control" id="editAffiliateWallet" value="${user.affiliateWallet || 0}"></div>
+                    <div class="form-group">
+                        <label>Plan</label>
+                        <select class="form-control" id="editPlan">
+                            <option value="">None</option>
+                            <option value="500" ${user.plan == 500 ? 'selected' : ''}>Basic (₦500)</option>
+                            <option value="1000" ${user.plan == 1000 ? 'selected' : ''}>Premium (₦1000)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Activated</label>
+                        <select class="form-control" id="editActivated">
+                            <option value="false" ${!user.isActivated ? 'selected' : ''}>No</option>
+                            <option value="true" ${user.isActivated ? 'selected' : ''}>Yes</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="neon-btn" style="width: 100%;">Save Changes</button>
+                </form>
+            `);
+        }
+
+        function saveUserEdit(e, userId) {
+            e.preventDefault();
+            const user = DB.users.find(u => u.id === userId);
+            if (user) {
+                user.taskWallet = parseInt(document.getElementById('editTaskWallet').value) || 0;
+                user.depositWallet = parseInt(document.getElementById('editDepositWallet').value) || 0;
+                user.affiliateWallet = parseInt(document.getElementById('editAffiliateWallet').value) || 0;
+                user.plan = document.getElementById('editPlan').value || null;
+                user.isActivated = document.getElementById('editActivated').value === 'true';
+                saveDB();
+                closeModal();
+                loadAdminUsers();
+                showToast('User updated!', 'success');
+            }
+        }
+
+        function adminDeleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+            DB.users = DB.users.filter(u => u.id !== userId);
+            saveDB();
+            loadAdminUsers();
+            showToast('User deleted', 'success');
+        }
+
+        // ==================== TOAST NOTIFICATIONS ====================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // ==================== CLOSE MODAL ON OVERLAY CLICK ====================
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ==================== INIT ====================
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
